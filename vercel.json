@@ -9,7 +9,7 @@
       "src": "client/app/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "client/app/build"
+        "distDir": "build"
       }
     }
   ],
@@ -17,7 +17,10 @@
     { "src": "/api/(.*)", "dest": "/server/server.js" },
     { "src": "/(.*)", "dest": "/client/app/build/index.html" }
   ],
-  "env": {
-    "CI": "false"
+  "build": {
+    "env": {
+      "CI": "false",
+      "NPM_CONFIG_CACHE": "/tmp/npm"
+    }
   }
 }
