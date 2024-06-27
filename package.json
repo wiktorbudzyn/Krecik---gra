@@ -1,0 +1,14 @@
+{
+    "name": "krecik-gra",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start": "concurrently \"npm run server\" \"npm run client\"",
+        "server": "cd server && npm start",
+        "client": "cd client/app && npm start",
+        "build": "cd client/app && npm run build"
+    },
+    "dependencies": {
+        "concurrently": "^7.6.0"
+    }
+}
