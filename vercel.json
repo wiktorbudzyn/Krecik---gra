@@ -10,7 +10,7 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "client/app/build",
-        "installCommand": "npm install && chmod -R +x node_modules/.bin",
+        "installCommand": "npm install",
         "buildCommand": "npm run build"
       }
     }
