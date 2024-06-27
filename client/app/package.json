@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "prebuild": "npm install es-abstract string.prototype.matchall schema-utils semver",
     "postinstall": "chmod -R +x node_modules/.bin || true",
     "start": "react-scripts start",
-    "build": "npm run prebuild && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
