@@ -10,10 +10,10 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "build",
-        "installCommand": "npm install --legacy-peer-deps",
-        "buildCommand": "npm run build"
+        "buildCommand": "npx react-scripts build"
       }
     }
+    
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/server/server.js" },
