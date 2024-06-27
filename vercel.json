@@ -11,7 +11,7 @@
       "config": {
         "distDir": "build",
         "installCommand": "npm install --unsafe-perm --prefix client/app && npm install --unsafe-perm --prefix server",
-        "buildCommand": "npm run prebuild && npm run build --prefix client/app"
+        "buildCommand": "npm run prebuild --prefix client/app && npm run build --prefix client/app"
       }
     }
   ],
