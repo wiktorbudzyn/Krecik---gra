@@ -1,14 +1,41 @@
 {
-    "name": "krecik-gra",
+    "name": "Krecik---gra",
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "start": "concurrently \"npm run server\" \"npm run client\"",
-        "server": "cd server && npm start",
-        "client": "cd client/app && npm start",
-        "build": "cd client/app && npm run build"
+      "preinstall": "npm cache clean --force",
+      "start": "node server/server.js",
+      "client:build": "cd client/app && npm install && npm run build",
+      "build": "npm run client:build"
     },
     "dependencies": {
-        "concurrently": "^7.6.0"
+      "axios": "^1.5.1",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "react-router-dom": "^6.17.0",
+      "react-scripts": "^5.0.1",
+      "web-vitals": "^2.1.4",
+      "express": "^4.17.1",
+      "mongoose": "^5.13.13",
+      "body-parser": "^1.19.0",
+      "cors": "^2.8.5",
+      "express-session": "^1.17.2"
+    },
+    "devDependencies": {
+      "@babel/plugin-proposal-private-property-in-object": "^7.21.0",
+      "cross-env": "^7.0.3"
+    },
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
     }
-}
+  }
+  
