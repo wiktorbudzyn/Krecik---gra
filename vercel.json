@@ -10,10 +10,10 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "build",
-        "buildCommand": "npx react-scripts build"
+        "installCommand": "npm install --unsafe-perm --prefix client/app && npm install --unsafe-perm --prefix server",
+        "buildCommand": "node ./node_modules/react-scripts/bin/react-scripts.js build"
       }
     }
-    
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/server/server.js" },
