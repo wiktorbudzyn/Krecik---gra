@@ -16,7 +16,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "prebuild": "ls -la ./node_modules/.bin/ && chmod +x ./node_modules/.bin/*",
+    "build": "npx react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "preinstall": "npm cache clean --force"
