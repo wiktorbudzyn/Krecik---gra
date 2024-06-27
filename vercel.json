@@ -9,29 +9,15 @@
       "src": "client/app/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "client/app/build",
-        "installCommand": "npm install --unsafe-perm",
-        "buildCommand": "npm run build"
+        "distDir": "client/app/build"
       }
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server/server.js"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/client/app/build/$1"
-    }
+    { "src": "/api/(.*)", "dest": "/server/server.js" },
+    { "src": "/(.*)", "dest": "/client/app/build/index.html" }
   ],
-  "build": {
-    "env": {
-      "CI": "false",
-      "NPM_CONFIG_CACHE": "/tmp/npm"
-    }
+  "env": {
+    "CI": "false"
   }
 }
