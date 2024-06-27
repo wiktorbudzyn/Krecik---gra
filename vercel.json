@@ -9,16 +9,15 @@
       "src": "client/app/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build",
-        "installCommand": "npm install --unsafe-perm --prefix client/app && npm install --unsafe-perm --prefix server",
-        "buildCommand": "node ./node_modules/react-scripts/bin/react-scripts.js build"
+        "distDir": "build"
       }
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/server/server.js" },
-    { "src": "/(.*)", "dest": "/client/app/build/index.html" }
+    { "src": "/api/(.*)", "dest": "server/server.js" },
+    { "src": "/(.*)", "dest": "client/app/build/index.html" }
   ],
+  
   "build": {
     "env": {
       "CI": "false",
