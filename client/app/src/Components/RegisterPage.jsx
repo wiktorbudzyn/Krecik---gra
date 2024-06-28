@@ -54,14 +54,12 @@ export default function RegisterPage() {
     return true;
   }
 
-  async function validateForm() {
-    if (
-      validateNick() === true &&
-      validateLogin() === true &&
-      validatePassword() === true
-    ) {
+  async function validateForm(event) {
+    event.preventDefault();
+
+    if (validateNick() && validateLogin() && validatePassword()) {
       try {
-        const response = await axios.post("http://localhost:3001/register", {
+        const response = await axios.post("/register", {
           Nick,
           Login,
           Password,
@@ -70,82 +68,73 @@ export default function RegisterPage() {
         if (response.data.success) {
           navigate("/");
         } else {
-          setRegistrationError("Błąd podczas rejestracji. Spróbuj ponownie.");
+          console.log(response.data.error);
+          setRegistrationError("Błąd podczas rejestracji");
         }
       } catch (error) {
-        setRegistrationError("Błąd podczas rejestracji. Spróbuj ponownie.");
+        console.error(error);
+        setRegistrationError("Błąd podczas rejestracji");
       }
     }
   }
+
   return (
-    <>
-      <div className="curve">
-        <Link to="/">
-          <div className="logo_register_page">
-            <img className="logo_left" src={LOGO4} alt="LogoApp" />
-            <img className="logo_right" src={LOGO4} alt="LogoApp" />
-          </div>
-        </Link>
-
-        <div className="form_element">
-          <div className="form">
-            <form>
-              <h1>Zarejestruj sie!</h1>
-
-              {registrationError && (
-                <p className="registration-error">{registrationError}</p>
-              )}
-
-              <div className="values">
-                <label>
-                  {/* Nick: */}
-                  <br />
-                  <input
-                    name="nick"
-                    type="text"
-                    placeholder="Nick"
-                    required
-                    onChange={(e) => setNick(e.target.value)}
-                  />
-                </label>
-                <br />
-                <label>
-                  {/* Email: */}
-                  <br />
-                  <input
-                    name="login"
-                    type="email"
-                    placeholder="Email"
-                    required
-                    onChange={(e) => setLogin(e.target.value)}
-                  />
-                </label>
-                <br />
-                <label>
-                  {/* Hasło: */}
-                  <br />
-                  <input
-                    name="password"
-                    type="password"
-                    placeholder="Hasło"
-                    required
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </label>
-              </div>
-            </form>
-
-            <div className="buttonsRegister">
-              <Link to="/" onClick={validateForm}>
-                <button>Zarejestruj się!</button>
-              </Link>
-              <Link to="/">
-                <button>Powrót</button>
-              </Link>
-            </div>
-          </div>
+    <div className="register-page">
+      <div className="header">
+        <div className="logo">
+          <img src={LOGO4} alt="logo" />
         </div>
+        <div className="title">Rejestracja</div>
       </div>
-    </>
+
+      <form onSubmit={validateForm}>
+        <div className="input-container">
+          <label htmlFor="nick">Nick:</label>
+          <input
+            type="text"
+            id="nick"
+            name="nick"
+            value={Nick}
+            onChange={(e) => setNick(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="input-container">
+          <label htmlFor="login">Login (E-mail):</label>
+          <input
+            type="text"
+            id="login"
+            name="login"
+            value={Login}
+            onChange={(e) => setLogin(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="input-container">
+          <label htmlFor="password">Hasło:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={Password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        {registrationError && (
+          <div className="error-message">{registrationError}</div>
+        )}
+
+        <div className="button-container">
+          <button type="submit">Zarejestruj się</button>
+          <Link to="/">
+            <button type="button">Wróć do logowania</button>
+          </Link>
+        </div>
+      </form>
+    </div>
   );
 }

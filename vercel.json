@@ -2,21 +2,28 @@
   "version": 2,
   "builds": [
     {
-      "src": "server/server.js",
+      "src": "server.js",
       "use": "@vercel/node"
     },
     {
       "src": "client/app/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build"
+        "distDir": "client/app/build"
       }
     }
   ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/server/server.js"
+      "dest": "/client/app/build/$1"
     }
-  ]
+  ],
+  "env": {
+    "MONGO_URI": "mongodb+srv://wiktorbudzyn87:Kilinskiego5.@ac-yd4qpnr-shard-00-00.tkj256a.mongodb.net:27017,ac-yd4qpnr-shard-00-01.tkj256a.mongodb.net:27017,ac-yd4qpnr-shard-00-02.tkj256a.mongodb.net:27017/?authSource=admin&replicaSet=atlas-1u5j4g-shard-0&retryWrites=true&w=majority&appName=Krecik-1&ssl=true"
+  }
 }
