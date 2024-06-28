@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-var cors = require('cors');
+const cors = require('cors');
 const session = require('express-session');
+const path = require('path');
 
 const app = express();
-app.use(cors())
+app.use(cors());
 const port = process.env.PORT || 3001;
 
 // Połączenie z bazą danych MongoDB
@@ -27,8 +28,7 @@ const userSchema = new mongoose.Schema({
   Password: { type: String, required: true },
   Score: { type: Number, default: 0 },
   About: { type: String, default: "Cześć! Jestem nowym graczem Mole Escape" }
-}, { timestamps: true }
-);
+}, { timestamps: true });
 
 // Inicjalizacja sesji
 app.use(session({
@@ -85,6 +85,7 @@ app.post('/register', (req, res) => {
     });
 
 });
+
 app.post('/updateAbout/:nick', (req, res) => {
   const nick = req.params.nick;
   const inputValue = req.body.inputValue;
@@ -105,6 +106,7 @@ app.post('/updateAbout/:nick', (req, res) => {
       res.status(500).json({ error: 'Błąd podczas aktualizacji dokumentu' });
     });
 });
+
 app.get('/check-login', (req, res) => {
   if (req.session.user) {
     res.json({ success: true, nick: req.session.user.Nick });
@@ -134,6 +136,7 @@ app.get('/top-players', async (req, res) => {
     res.status(500).json({ success: false, message: 'Błąd podczas pobierania danych o najlepszych graczach' });
   }
 });
+
 app.get('/getAbout/:nick', (req, res) => {
   const nick = req.params.nick;
   User.findOne({ Nick: nick })
@@ -149,6 +152,7 @@ app.get('/getAbout/:nick', (req, res) => {
       res.status(500).json({ error: 'Błąd podczas pobierania informacji o polu opisu' });
     });
 });
+
 app.post('/submit-score', (req, res) => {
   const { nick, score } = req.body;
   User.findOneAndUpdate({ Nick: nick, Score: { $lt: score } }, { Score: score }, { new: true })
@@ -167,6 +171,12 @@ app.post('/submit-score', (req, res) => {
     });
 });
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "..", "client", "app", "build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "client", "app", "build", "index.html"));
+});
 
 app.listen(port, () => {
   console.log(`Serwer nasłuchuje na porcie ${port}`);
