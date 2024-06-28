@@ -5,8 +5,7 @@
       "src": "server/server.js",
       "use": "@vercel/node",
       "config": {
-        "installCommand": "npm install",
-        "postInstallCommand": "chmod -R +x node_modules/.bin || true"
+        "installCommand": "npm install"
       }
     },
     {
