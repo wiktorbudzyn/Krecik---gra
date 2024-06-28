@@ -10,7 +10,7 @@ app.use(cors());
 const port = process.env.PORT || 3001;
 
 // Połączenie z bazą danych MongoDB
-mongoose.connect('mongodb+srv://wiktorbudzyn87:Kilinskiego5.@krecik-1.tkj256a.mongodb.net/?retryWrites=true&w=majority&appName=Krecik-1', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
