@@ -4,24 +4,19 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
-    "client:install": "cd client/app && npm install",
-    "server:install": "cd server && npm install",
-    "client:build": "cd client/app && npm run build",
-    "postinstall": "npm run client:install && npm run server:install",
-    "prebuild": "npm install es-abstract string.prototype.matchall schema-utils semver",
-    "build": "npm run client:build"
+    "client": "cd client/app && npm start",
+    "build": "cd client/app && npm run build"
   },
   "dependencies": {
-    "cross-env": "^7.0.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.17.1",
-    "mongoose": "^5.9.7",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "express-session": "^1.17.2",
+    "mongoose": "^8.5.0",
+    "open": "^10.1.0"
   },
   "devDependencies": {
-    "es-abstract": "^1.23.3",
-    "schema-utils": "^2.7.1",
-    "semver": "^7.6.2",
-    "string.prototype.matchall": "^4.0.11"
+    "cross-env": "^7.0.3"
   }
 }

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -30,6 +31,8 @@ const userSchema = new mongoose.Schema({
   About: { type: String, default: "Cześć! Jestem nowym graczem Mole Escape" }
 }, { timestamps: true });
 
+const User = mongoose.model('User', userSchema);
+
 // Inicjalizacja sesji
 app.use(session({
   secret: 'secret-key',
@@ -37,18 +40,14 @@ app.use(session({
   saveUninitialized: true
 }));
 
-const User = mongoose.model('User', userSchema);
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Obsługa logowania użytkownika
 app.post('/login', async (req, res) => {
   const { Login, Password } = req.body;
-  console.log(Login, Password);
   try {
     const user = await User.findOne({ Login });
-    console.log(user);
     if (!user) {
       return res.status(401).json({ success: false, message: 'Nieprawidłowy login lub hasło' });
     }
@@ -57,7 +56,6 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ success: false, message: 'Nieprawidłowy login lub hasło' });
     }
 
-    // Zapisz informacje o zalogowanym użytkowniku w sesji
     req.session.user = user;
 
     res.status(200).json({ success: true, message: 'Zalogowano pomyślnie', nick: user.Nick });
@@ -70,20 +68,16 @@ app.post('/login', async (req, res) => {
 // Obsługa rejestracji
 app.post('/register', (req, res) => {
   const { Nick, Login, Password } = req.body;
-
-  // Walidacja i zapis do bazy danych
   const newUser = new User({ Nick, Login, Password });
   newUser.save()
     .then(() => {
       console.log('Użytkownik zarejestrowany');
       return res.json({ success: true });
-
     })
     .catch((err) => {
       console.error('Błąd podczas zapisu użytkownika do bazy danych:', err);
       return res.json({ success: false, error: err });
     });
-
 });
 
 app.post('/updateAbout/:nick', (req, res) => {
@@ -116,7 +110,6 @@ app.get('/check-login', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  // Zniszcz sesję (wyloguj użytkownika)
   req.session.destroy((err) => {
     if (err) {
       console.error(err);
@@ -180,4 +173,5 @@ app.get("*", (req, res) => {
 
 app.listen(port, () => {
   console.log(`Serwer nasłuchuje na porcie ${port}`);
+  console.log(`Otwórz przeglądarkę i wejdź na: http://localhost:${port}`);
 });
